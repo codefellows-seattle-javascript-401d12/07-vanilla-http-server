@@ -25,33 +25,39 @@ const server = http.createServer(function(request, response) {
   }
 
   if (request.url.pathname === '/cowsay') {
-    var cowType = request.url.query.cow;
-    if (!cowType) cowType = 'default';
     if (request.method === 'GET') {
-      if (request.url.query.text) {
-        response.writeHead(200, contentType);
-        response.write(cowsay.say({text: request.url.query.text, f: cowType}));
-        response.end();
-        return;
-      }
-      badRequest();
-      return;
-    }
-
-    if (request.method === 'POST') {
-      parseBody(request, function(err) {
-        if (err) return console.error(err);
-        if (request.body.text) {
+      var cowType = request.url.query.cow;
+      if (!cowType) cowType = 'default';
+      cowsay.list(function(err, cowArray) {
+        if (cowArray.indexOf(cowType) === -1) cowType = 'default';
+        if (request.url.query.text) {
           response.writeHead(200, contentType);
-          response.write(cowsay.say({text: request.body.text, f: cowType}));
+          response.write(cowsay.say({text: request.url.query.text, f: cowType}));
           response.end();
           return;
         }
         badRequest();
         return;
       });
-      badRequest();
-      return;
+    }
+
+    if (request.method === 'POST') {
+      parseBody(request, function(err) {
+        if (err) return console.error(err);
+        var cowType = request.body.cow;
+        if (!cowType) cowType = 'default';
+        cowsay.list(function(err, cowArray) {
+          if (cowArray.indexOf(cowType) === -1) cowType = 'default';
+          if (request.body.text) {
+            response.writeHead(200, contentType);
+            response.write(cowsay.say({text: request.body.text, f: cowType}));
+            response.end();
+            return;
+          }
+          badRequest();
+          return;
+        });
+      });
     }
   }
 });
