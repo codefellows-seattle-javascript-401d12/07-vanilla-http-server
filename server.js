@@ -3,13 +3,30 @@
 const http = require('http');
 const url = require('url');
 const querystring = require('querystring');
+const cowsay = require('cowsay');
 
 const PORT = process.env.PORT || 5555;
 
 const router = require('./model/router.js');
 
 router.add('GET', '/', function(req, res) {
-  res.write('hey there. This is the base path.\n');
+  res.write('hello from my server!\n');
+  res.end();
+});
+
+router.add('GET', '/cowsay', function(req, res) {
+  console.log('GET /cowsay');
+  let q = req.url.query.text;
+  let msg = (q && q.length > 0) ? q : 'text=Tell me what to say';
+  // res.write('You are trying to GET to /cowsay...\n');
+  msg = cowsay.say({ text: msg});
+  res.write(msg + '\n');
+  res.end();
+});
+
+router.add('POST', '/cowsay', function(req, res) {
+  console.log('POST /cowsay');
+  res.write('You are trying to POST to /cowsay...\n');
   res.end();
 });
 
@@ -20,12 +37,9 @@ const server = http.createServer(function(req, res) {
   //Decode the query string
   req.url.query = querystring.parse(req.url.query);
 
-  //TODO: see if we have a handler for method && path
-  // We can let the router try to handle the request.
-  // If it can't find a route, callback('no route found')
-  // If route is found, eventually callback(null, ???)
-  var handler = router.find(req.method, req.url.path);
+  console.log(req.url);
 
+  var handler = router.find(req.method, req.url.pathname);
   if(handler) return handler(req, res);
 
   res.write('This should be a 404. Route not found.\n');
