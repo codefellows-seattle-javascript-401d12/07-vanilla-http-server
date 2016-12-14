@@ -26,6 +26,7 @@ const server = http.createServer(function(request, response) {
     }
     response.writeHead(400, contentType);
     response.write(cowsay.say({text: 'Bad request'}));
+    response.end();
   }
 
 });
