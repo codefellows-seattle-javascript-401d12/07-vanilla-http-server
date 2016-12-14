@@ -8,6 +8,12 @@ const parseBody = require('./lib/body-parser.js');
 const PORT = process.env.PORT || 8080;
 
 const server = http.createServer(function(request, response) {
+  request.url = url.parse(request.url);
+  request.url.query = querystring.parse(request.url.query);
+
+  if (request.url.pathname === '/*') {
+    response.writeHead(200, 'Hello from my server!', {'Content-Type': 'text/plain'});
+  }
 
 });
 
