@@ -13,33 +13,37 @@ const server = http.createServer(function(request, response) {
 
   if (request.url.pathname === '/') {
     response.writeHead(200, 'Hello from my server!', {'Content-Type': 'text/plain'});
-    response.end();
+    return response.end();
   }
 
   if (request.url.pathname === '/cowsay') {
     const contentType = {'Content-Type': 'text/plain'};
     if (request.method === 'GET') {
-      if (request.url.query['text']) {
+      if (request.url.query.text) {
         response.writeHead(200, contentType);
         response.write(cowsay.say({text: request.url.query.text}));
-        response.end();
-        return;
+        return response.end();
       }
       response.writeHead(400, contentType);
       response.write(cowsay.say({text: 'Bad request'}));
-      response.end();
-      return;
+      return response.end();
     }
 
     if (request.method === 'POST') {
       parseBody(request, function(err) {
         if (err) return console.error(err);
-        console.log('POST request request body:', request.body);
+        if (request.body.query.text) {
+          response.writeHead(200, contentType);
+          response.write(cowsay.say({text: request.body.query.text}));
+          return response.end();
+        }
+        response.writeHead(400, contentType);
+        response.write(cowsay.say({text: 'Bad request'}));
+        return response.end();
       });
     }
   }
-
-
+  response.end();
 });
 
 server.listen(PORT, function() {
