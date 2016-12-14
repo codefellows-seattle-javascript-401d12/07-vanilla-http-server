@@ -8,6 +8,14 @@ const parseBody = require('./lib/body-parser.js');
 const PORT = process.env.PORT || 8080;
 
 const server = http.createServer(function(request, response) {
+  const contentType = {'Content-Type': 'text/plain'};
+  const badRequest = function() {
+    response.writeHead(400, contentType);
+    response.write(cowsay.say({text: 'Bad request.'}));
+    response.end();
+    return;
+  };
+
   request.url = url.parse(request.url);
   request.url.query = querystring.parse(request.url.query);
 
@@ -18,7 +26,6 @@ const server = http.createServer(function(request, response) {
   }
 
   if (request.url.pathname === '/cowsay') {
-    const contentType = {'Content-Type': 'text/plain'};
     if (request.method === 'GET') {
       if (request.url.query.text) {
         response.writeHead(200, contentType);
@@ -26,10 +33,7 @@ const server = http.createServer(function(request, response) {
         response.end();
         return;
       }
-      response.writeHead(400, contentType);
-      response.write(cowsay.say({text: 'Bad request'}));
-      response.end();
-      return;
+      badRequest();
     }
 
     if (request.method === 'POST') {
@@ -41,11 +45,9 @@ const server = http.createServer(function(request, response) {
           response.end();
           return;
         }
-        response.writeHead(400, contentType);
-        response.write(cowsay.say({text: 'Bad request'}));
-        response.end();
-        return;
+        badRequest();
       });
+      badRequest();
     }
   }
 });
