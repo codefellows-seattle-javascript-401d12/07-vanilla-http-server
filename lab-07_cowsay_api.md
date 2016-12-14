@@ -19,10 +19,10 @@
 ## Description
 * [x] Create an HTTP Server using the NodeJS `http` module
 * [x] Create a *custom* body parsing module that is used for parsing the body of all **POST** requests
-* For all requests made to `/`, the server should respond with the following:
-  * a header containing `Content-Type: text/plain`
-  * a status code of **200**
-  * a response with the string "hello from my server!"
+* [x] For all requests made to `/`, the server should respond with the following:
+  * [x] a header containing `Content-Type: text/plain`
+  * [x] a status code of **200**
+  * [x] a response with the string "hello from my server!"
 * For all **GET** requests made to `/cowsay`, the server should respond with the following:
   * the query string should have the key value `text=<message>`
   * the response header should include `Content-Type: text/plain`
