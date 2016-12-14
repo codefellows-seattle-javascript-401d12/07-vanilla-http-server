@@ -32,9 +32,9 @@ const server = http.createServer(function(request, response) {
     if (request.method === 'POST') {
       parseBody(request, function(err) {
         if (err) return console.error(err);
-        if (request.body.query.text) {
+        if (request.body.text) {
           response.writeHead(200, contentType);
-          response.write(cowsay.say({text: request.body.query.text}));
+          response.write(cowsay.say({text: request.body.text}));
           return response.end();
         }
         response.writeHead(400, contentType);
