@@ -13,6 +13,7 @@ const server = http.createServer(function(request, response) {
 
   if (request.url.pathname === '/*') {
     response.writeHead(200, 'Hello from my server!', {'Content-Type': 'text/plain'});
+    response.end();
   }
 
 });
