@@ -26,10 +26,12 @@ const server = http.createServer(function(request, response) {
   }
 
   if (request.url.pathname === '/cowsay') {
+    var cowType = request.url.query.cow;
+    if (!cowType) cowType = 'default';
     if (request.method === 'GET') {
       if (request.url.query.text) {
         response.writeHead(200, contentType);
-        response.write(cowsay.say({text: request.url.query.text}));
+        response.write(cowsay.say({text: request.url.query.text, f: cowType}));
         response.end();
         return;
       }
@@ -41,7 +43,7 @@ const server = http.createServer(function(request, response) {
         if (err) return console.error(err);
         if (request.body.text) {
           response.writeHead(200, contentType);
-          response.write(cowsay.say({text: request.body.text}));
+          response.write(cowsay.say({text: request.body.text, f: cowType}));
           response.end();
           return;
         }
