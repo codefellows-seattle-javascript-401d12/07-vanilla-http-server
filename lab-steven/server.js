@@ -32,7 +32,10 @@ const server = http.createServer(function(request, response) {
     }
 
     if (request.method === 'POST') {
-
+      parseBody(request, function(err) {
+        if (err) return console.error(err);
+        console.log('POST request request body:', request.body);
+      });
     }
   }
 
