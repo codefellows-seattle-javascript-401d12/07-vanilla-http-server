@@ -1,2 +1,3 @@
-# templates
-Collection of useful files to re-use.
+# Cowsay HTTP Server
+
+The cowsay module is a fun module for wrapping text. 
