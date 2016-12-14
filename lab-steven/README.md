@@ -1,7 +1,7 @@
 #Basic GET and POST server
 ###HTTP server practice for lab 7, 401 JavaScript
 
-This is a simple module that will allow a user to practice sending GET and POST requests through the terminal using HTTPIE. You can install HTTPIE by running `brew install httpie` on a MAC or `sudo apt install httpie`.
+This is a simple module that will allow a user to practice sending GET and POST requests through the terminal using HTTPIE. You can install HTTPIE by running `brew install httpie` on a MAC or `sudo apt install httpie` on Linux.
 
 In order to use this Node app, clone down the repository, then navigate to its directory and run `npm i`. Once that's complete, run `node server.js`. You should see a confirmation message of 'Server running on port <port#>'.
 
