@@ -48,7 +48,6 @@ const server = http.createServer(function(request, response) {
       });
     }
   }
-  response.end();
 });
 
 server.listen(PORT, function() {
