@@ -19,7 +19,7 @@ const server = http.createServer(function(request, response) {
   request.url.query = querystring.parse(request.url.query);
 
   if (request.url.pathname === '/') {
-    response.writeHead(200, {'Content-Type': 'text/plain'});
+    response.writeHead(200, contentType);
     response.write('Hello from my server!');
     response.end();
     return;
