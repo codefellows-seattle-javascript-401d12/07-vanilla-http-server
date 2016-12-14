@@ -11,7 +11,7 @@ const server = http.createServer(function(request, response) {
   request.url = url.parse(request.url);
   request.url.query = querystring.parse(request.url.query);
 
-  if (request.url.pathname === '/*') {
+  if (request.url.pathname === '/') {
     response.writeHead(200, 'Hello from my server!', {'Content-Type': 'text/plain'});
     response.end();
   }
