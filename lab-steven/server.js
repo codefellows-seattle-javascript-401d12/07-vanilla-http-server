@@ -16,6 +16,18 @@ const server = http.createServer(function(request, response) {
     response.end();
   }
 
+  if (request.method === 'GET' && request.url.pathname === '/cowsay') {
+    const contentType = {'Content-Type': 'text/plain'};
+    if (request.url.query['text']) {
+      response.writeHead(200, contentType);
+      response.write(cowsay.say({text: request.url.query.text}));
+      response.end();
+      return;
+    }
+    response.writeHead(400, contentType);
+    response.write(cowsay.say({text: 'Bad request'}));
+  }
+
 });
 
 server.listen(PORT, function() {
