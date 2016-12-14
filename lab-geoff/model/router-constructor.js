@@ -10,11 +10,11 @@ Router.prototype.add = function(method, path, handler) {
     return (route.method == method && route.path == path);
   });
   if(found) {
+    //TODO: make a test that sets a route more than once
     //Update existing route's handler.
     found.handler = handler;
     return found;
   }
-  //TODO: Is it worthwhile to make a Route constructor?
   this.routes.push({
     method: method,
     path: path,

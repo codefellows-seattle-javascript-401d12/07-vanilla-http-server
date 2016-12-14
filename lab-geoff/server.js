@@ -11,18 +11,11 @@ const parseBody = require('./lib/parse-body.js');
 
 //TODO: Q: Should we start using (req, res) => ?
 const server = http.createServer(function(req, res) {
-  //Convert the url into an object.
   req.url = url.parse(req.url);
-  //Decode the query string
   req.url.query = querystring.parse(req.url.query);
-
-  console.log(req.url);
 
   //I'm attaching a couple of utility methods to res
   res.send = function(msg) {
-    //set the headers, if any.
-    //also get the status from the res.
-    //TODO: What is the default status code?
     res.writeHead(res.status || 200, res.statusMessage || 'OK', res.headers);
 
     console.log('about to send:', msg);
@@ -37,7 +30,6 @@ const server = http.createServer(function(req, res) {
   };
 
   res.err = function(err) {
-    console.log('res.err:', err);
     res.status = err.status || 500;
     res.statusMessage = err.statusMessage || 'Internal server error';
 
@@ -49,7 +41,6 @@ const server = http.createServer(function(req, res) {
   };
 
   if(req.method === 'POST') {
-    console.log('parsing body...');
     return parseBody(req, (err, body) => {
       if(err) return res.err(err);
       console.log('parsed body:',body);

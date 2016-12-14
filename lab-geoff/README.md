@@ -4,9 +4,14 @@ The cowsay module is a fun module for wrapping text.
 
 # How to install
 
-- Clone this repository, run `git clone https://github.com/geoffsimons/07-vanilla-http-server.git`
-- Run `npm i` to install dependencies
-- To startup the server: `node server.js`
+```sh
+git clone https://github.com/geoffsimons/07-vanilla-http-server.git
+npm i
+```
+- To startup the server:
+```sh
+node server.js
+```
 
 # API
 

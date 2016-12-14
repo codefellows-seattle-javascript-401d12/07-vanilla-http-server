@@ -24,12 +24,10 @@ function say(params, res) {
 }
 
 router.add('GET', '/cowsay', function(req, res) {
-  console.log('GET /cowsay');
   say(req.url.query, res);
 });
 
 router.add('POST', '/cowsay', function(req, res) {
-  console.log('POST /cowsay');
   say(req.body, res);
 });
 
