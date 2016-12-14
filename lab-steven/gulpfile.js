@@ -8,7 +8,7 @@ gulp.task('test', function() {
 });
 
 gulp.task('dev', function() {
-  gulp.watch(['**/*.js', '!node_modules/**'], ['lint', 'test']);
+  gulp.watch(['**/*.js', '!node_modules/**'], ['test']);
 });
 
 gulp.task('default', ['dev']);
