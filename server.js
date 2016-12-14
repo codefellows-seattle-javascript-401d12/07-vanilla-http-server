@@ -16,10 +16,27 @@ const server = http.createServer(function(req, res) {
   //
   // console.log('request method:', req.method);
 
-  if (req.method === 'GET' && req.url.pathname === '/cowsay') {
-    // console.log('you have made a request!');
-    res.write(cowsay.say({text: 'hey erick'}));
-    res.end();
+  if (req.method === 'POST') {
+    //body parser is built and being used below
+    parseBody(req, function(err) {
+      if (err) console.error(err);
+      console.log('POST request body:', req.body);
+    });
+  }
+
+  if (req.method === 'GET' && req.url.pathname === '/') {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('hello from my server!');
+  }
+
+  if (req.method === 'GET' && req.url.pathname === '/cowsay' && req.url.query.text !== undefined) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end(cowsay.say({text: req.url.query.text.trim()}));
+  }
+
+  if (req.method === 'GET' && req.url.pathname === '/cowsay' && req.url.query.text === undefined) {
+    res.writeHead(400, {'Content-Type': 'text/plain'});
+    res.end(cowsay.say({text: 'bad request'}));
   }
   res.end();
 });
