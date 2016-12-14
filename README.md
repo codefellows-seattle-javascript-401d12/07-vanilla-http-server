@@ -17,7 +17,7 @@ This server follows RESTful ideology, with the following routes:
 - `text` should be a URL encoded string to wrap
 - `f` is what cow you want to have speak
 * POST /cowsay
-```json
+```js
 {
   text: 'Something to say (REQUIRED)',
   f: 'beavis.zen'
