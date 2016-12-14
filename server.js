@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 8080;
 const server = http.createServer(function(req, res) {
   console.log('req=================\r\n', req);
   console.log('res=================\r\n', res);
+  req.url = url.parse(req.url);
+  req.url.query = querystring.parse(req.url.query);
 
   res.end();
 });
