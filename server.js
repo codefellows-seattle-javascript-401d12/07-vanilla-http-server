@@ -8,6 +8,7 @@ const cowsay = require('cowsay');
 const PORT = process.env.PORT || 5555;
 
 const router = require('./model/router.js');
+const parseBody = require('./lib/parse-body.js');
 
 router.add('GET', '/', function(req, res) {
   res.write('hello from my server!\n');
@@ -44,12 +45,30 @@ const server = http.createServer(function(req, res) {
 
   console.log(req.url);
 
+  if(req.method === 'POST') {
+    return parseBody(req, (err, body) => {
+      if(err) return handleErr(err, req, res);
+      console.log('parsed body:',body);
+      handleRoute(req, res);
+    });
+  }
+  //On non-POST reqs, we still use handleRoute.
+  handleRoute(req, res);
+});
+
+function handleRoute(req, res) {
   var handler = router.find(req.method, req.url.pathname);
   if(handler) return handler(req, res);
 
   res.write('This should be a 404. Route not found.\n');
   res.end();
-});
+}
+
+//TODO: Q: Do I need req? What might we do with that?
+function handleErr(err, req, res) {
+  res.write(`Error: ${err}`);
+  res.end();
+}
 
 server.listen(PORT, () => {
   console.log('cowsay server up', PORT);
