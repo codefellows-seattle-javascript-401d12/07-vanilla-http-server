@@ -7,21 +7,6 @@ const querystring = require('querystring');
 const parseBody = require('./lib/parse-body.js');
 const PORT = process.env.PORT || 8080;
 
-// const server = http.createServer( (req, res) => {
-//   res.setHeader('Content-Type', 'text/plain');
-//   res.end();
-// });
-
-// server.on('connect', (req, cltSocket, head) => {
-//   req.url = url.parse(req.url);
-//   req.url.query = querystring.parse(req.url.query);
-// });
-//
-//
-// let getServer = function() {
-//
-// };
-
 const server = http.createServer(function(req, res) {
   req.url = url.parse(req.url);
   req.url.query = querystring.parse(req.url.query);
