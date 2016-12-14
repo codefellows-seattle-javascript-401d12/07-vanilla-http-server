@@ -57,3 +57,8 @@ const server = http.createServer(function(req, res) {
     });
   }
 });
+
+//**START SERVER**
+server.listen(PORT, function() {
+  console.log('server up:', PORT);
+});
