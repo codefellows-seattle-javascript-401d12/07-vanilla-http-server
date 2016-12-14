@@ -44,7 +44,10 @@ const server = http.createServer(function(request, response) {
 
     if (request.method === 'POST') {
       parseBody(request, function(err) {
-        if (err) return console.error(err);
+        if (err) {
+          badRequest();
+          return console.error(err);
+        }
         var cowType = request.body.cow;
         if (!cowType) cowType = 'default';
         cowsay.list(function(err, cowArray) {
