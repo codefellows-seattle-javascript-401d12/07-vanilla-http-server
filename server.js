@@ -32,8 +32,19 @@ router.add('GET', '/cowsay', function(req, res) {
 
 router.add('POST', '/cowsay', function(req, res) {
   console.log('POST /cowsay');
-  res.write('You are trying to POST to /cowsay...\n');
+  //For now, I'm just going to pass the body to cowsay
+  if(!req.body || !req.body.text || req.body.text.length <= 0) {
+    console.log('body is missing "text"');
+    return handleErr('Cannot find valid "text" param in POST body', req, res);
+
+    //TODO: handleErr(options -> { status, statusMessage })
+  }
+
+  let msg = cowsay.say(req.body);
+  console.log('about to send:', msg);
+  res.write(msg + '\n');
   res.end();
+  console.log('...done sending');
 });
 
 //TODO: Q: Should we start using (req, res) => ?
@@ -46,6 +57,7 @@ const server = http.createServer(function(req, res) {
   console.log(req.url);
 
   if(req.method === 'POST') {
+    console.log('parsing body...');
     return parseBody(req, (err, body) => {
       if(err) return handleErr(err, req, res);
       console.log('parsed body:',body);
@@ -66,8 +78,11 @@ function handleRoute(req, res) {
 
 //TODO: Q: Do I need req? What might we do with that?
 function handleErr(err, req, res) {
-  res.write(`Error: ${err}`);
+  console.log('handleErr:',err);
+  // console.log(res);
+  res.write(`Error: ${err}\n`);
   res.end();
+  console.log('...wrote err msg');
 }
 
 server.listen(PORT, () => {
