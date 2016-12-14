@@ -27,38 +27,37 @@ const server = http.createServer(function(req, res) {
       res.write(cowsay.say(req.url.query));
     } catch (err) {
       res.writeHead(400);
-      res.write(cowsay.say({
+      res.write(cowsay.think({
         text: 'Bad Request. Ren is sad. You could try: http localhost:3000/cowsay?text=hi',
         f: 'ren'
       }));
-      return res.end();
     }
+    return res.end();
   }
 
-  if (req.method === 'POST' && req.url.pathname === '/cowsay') {
-    if (req.body || req.body.text) {
-      try {
-        parseBody(req, function(err, body) {
-          if(err) console.error(err);
-          res.writeHead(200, {
-            'Content-Type': 'text/plain',
+  if(req.method === 'POST' && req.url.pathname === '/cowsay') {
+    parseBody(req, function(err) {
+      if (err) return console.error(err);
+      if(req.body.text) {
+        try {
+          res.writeHead(200,{
+            'Content-Type': 'text/plain'
           });
-          res.write(cowsay.say(body));
-          console.log('POST request body:', req.body);
-          res.end();
-        });
-        return;
-      } catch (err) {
-        res.writeHead(400, {
-          'Content-Type': 'text/plain'
-        });
-        res.write(cowsay.say({
-          text: 'Bad Request. Daemon is happy. You could try: http POST localhost:3000?text=hello',
-          f: 'daemon'
-        }));
-        return res.end();
+          res.write(cowsay.say({
+            text: req.body.text
+          }));
+          return res.end();
+        } catch (err) {
+          res.writeHead(400);
+          res.write(cowsay.think({
+            text: 'Bad Request. Daemon is happy. Try again.',
+            f: 'daemon'
+          }));
+          return res.end();
+        }
       }
-    }
+      return res.end();
+    });
   }
 });
 
