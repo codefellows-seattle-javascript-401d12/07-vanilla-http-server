@@ -14,15 +14,15 @@ Run `node server.js` to start your server. You will receive a response of 'serve
 ### Use
 
 Making a GET request
-Run `http localhost:<PORT>/cowsay text=='<message>'`
-This will update the query text to have the cow say your <message>
-You will also receive a status code of 200.
+* Run `http localhost:<PORT>/cowsay text=='<message>'`
+* This will update the query text to have the cow say your <message>
+* You will also receive a status code of 200.
 
-If you run `http localhost:<PORT>/cowsay` you should receive a 400 status code, and a message of 'bad request'
+* If you run `http localhost:<PORT>/cowsay` you should receive a 400 status code, and a message of 'bad request'
 
 Making a POST request
-Run `http POST localhost:<PORT>/cowsay text='<message>'`
-This will update the body to have the cow say your <message>
-You will also receive a status code of 200.
+* Run `http POST localhost:<PORT>/cowsay text='<message>'`
+* This will update the body to have the cow say your <message>
+* You will also receive a status code of 200.
 
-If you run `http POST localhost:<PORT>/cowsay` you should receive a 400 status code, and a message of 'bad request'
+* If you run `http POST localhost:<PORT>/cowsay` you should receive a 400 status code, and a message of 'bad request'
