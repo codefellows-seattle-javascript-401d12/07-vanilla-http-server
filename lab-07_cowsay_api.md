@@ -17,7 +17,7 @@
   * `README.md`
 
 ## Description
-* Create an HTTP Server using the NodeJS `http` module
+* [x] Create an HTTP Server using the NodeJS `http` module
 * Create a *custom* body parsing module that is used for parsing the body of all **POST** requests
 * For all requests made to `/`, the server should respond with the following:
   * a header containing `Content-Type: text/plain`
