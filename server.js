@@ -11,16 +11,18 @@ const server = http.createServer(function(req, res) {
   req.url = url.parse(req.url);
   req.url.query = querystring.parse(req.url.query);
 
-  // console.log('req url:', req.url);
-  // console.log('req querystring:', req.url.query);
-  //
-  // console.log('request method:', req.method);
-
   if (req.method === 'POST') {
-    //body parser is built and being used below
     parseBody(req, function(err) {
       if (err) console.error(err);
       console.log('POST request body:', req.body);
+      if(req.url.pathname === '/cowsay' && req.body.text !== undefined) {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end(cowsay.say({text: req.body.text.trim()}));
+      }
+      if(req.url.pathname === '/cowsay' && req.body.text === undefined) {
+        res.writeHead(400, {'Content-Type': 'text/plain'});
+        res.end(cowsay.say({text: 'bad request'}));
+      }
     });
   }
 
@@ -38,7 +40,7 @@ const server = http.createServer(function(req, res) {
     res.writeHead(400, {'Content-Type': 'text/plain'});
     res.end(cowsay.say({text: 'bad request'}));
   }
-  res.end();
+  // res.end();
 });
 
 server.listen(PORT, () => {
