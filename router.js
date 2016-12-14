@@ -13,13 +13,17 @@ router.add('GET', '/', function(req, res) {
 //TODO: Refactor all the cowsay routes into a cowsay module.
 router.add('GET', '/cowsay', function(req, res) {
   console.log('GET /cowsay');
+
   let q = req.url.query.text;
-  let msg = (q && q.length > 0) ? q : 'text=Tell me what to say';
-  msg = cowsay.say({
-    text: msg,
-    f: 'dragon',
-    e: '--',
-    T: 'Y'
+  if(!q || q.length == 0) {
+    res.status = 400;
+    res.statusMessage = 'bad request';
+    return res.send(cowsay.say({ text: 'bad request' }));
+  }
+  // let msg = (q && q.length > 0) ? q : 'text=Tell me what to say';
+  let msg = cowsay.say({
+    text: q,
+    f: req.url.query.f || 'beavis.zen'
   });
   res.send(msg);
 });
