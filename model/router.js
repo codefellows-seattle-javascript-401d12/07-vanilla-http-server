@@ -6,6 +6,7 @@ const routes = [];
 
 exports.add = function(method, path, handler) {
   var found = routes.find(function(route) {
+    //TODO: Add support for regex and/or glob specs
     return (route.method == method && route.path == path);
   });
   if(found) {
@@ -26,15 +27,6 @@ exports.find = function(method, path) {
     return (route.method == method && route.path == path);
   });
   if(found) return found.handler;
-};
-
-//TODO: Alternative impl for find
-exports.find2 = function(method, path, callback) {
-  routes.forEach(function(route) {
-    if(route.method == method && route.path == path) {
-      callback(route.handler);
-    }
-  });
 };
 
 //TODO: implement Array.prototype.find to see if I can match functionality
