@@ -19,16 +19,23 @@ const server = http.createServer(function(request, response) {
     parseBody(request, function(err) {
       if (err) console.log(err);
       console.log('POST request body:', request.body);
+      if(request.url.pathname === '/cowsay' && request.body.text !== undefined) {
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.end(cowsay.say({text: request.body.text.trim()}));
+      }
+      if(request.url.pathname === '/cowsay' && request.body.text === undefined) {
+        response.writeHead(400, {'Content-Type': 'text/plain'});
+        response.end(cowsay.say({text: 'bad request'}));
+      }
     });
   }
+
   if(request.url.pathname === '/') {
     response.writeHead(200, {'Content-Type': 'text/plain'});
     response.end('what up from my server');
   }
 
   if(request.method === 'GET' && request.url.pathname === '/cowsay' && request.url.query.text !== undefined) {
-  // if(request.method === 'GET' && request.url.pathname === '/cowsay') {
-
     response.writeHead(200, {'Content-Type': 'text/plain'});
     // response.write(cowsay.say({text: 'the cow says hello'}));
     response.end(cowsay.say({text: request.url.query.text.trim()}));
@@ -39,9 +46,9 @@ const server = http.createServer(function(request, response) {
     response.end(cowsay.say({text: 'bad request'}));
   }
 
-  response.end();
+  // response.end();
 });
 
 server.listen(PORT, function() {
-  console.log('server live on:', PORT);
+  console.log('server live on PORT:', PORT);
 });
