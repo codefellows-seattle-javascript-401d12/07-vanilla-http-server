@@ -20,9 +20,7 @@ const server = http.createServer(function(req, res) {
   //Logic: Method: GET
   if (req.method === 'GET') {
     if(req.url.pathname === '/') {
-      res.writeHead( 200, {
-        'Content-Type': 'text/plain'
-      });
+      res.writeHead( 200, {'Content-Type': 'text/plain'});
       res.write('Hello From The Server');
       res.end();
     }
@@ -44,9 +42,7 @@ const server = http.createServer(function(req, res) {
     parseBody(req, function(err){
       if (err) return console.error(err);
       if(req.body.text){
-        res.writeHead(200,{
-          'Content-Type': 'text/plain'
-        });
+        res.writeHead(200,{'Content-Type': 'text/plain'});
         res.write(cowsay.say({text:req.body.text}));
         res.end();
         return;
