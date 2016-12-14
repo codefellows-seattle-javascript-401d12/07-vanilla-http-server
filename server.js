@@ -7,25 +7,38 @@ const cowsay = require('cowsay');
 const parseBody = require('./lib/parse-body.js');
 const PORT = process.env.PORT || 3000;
 
-const server = http.createServer(function(req, response) {
-  req.url = url.parse(req.url);
-  req.url.query = querystring.parse(req.url.query);
+const server = http.createServer(function(request, response) {
+  request.url = url.parse(request.url);
+  request.url.query = querystring.parse(request.url.query);
 
   // console.log('req url:', request.url); //returns url object
   // console.log('req querystring:', request.url.query); //returns empty object
   // console.log(request.method); //returns GET method
 
-  if(req.method === 'POST') {
-    parseBody(req, function(err) {
+  if(request.method === 'POST') {
+    parseBody(request, function(err) {
       if (err) console.log(err);
-      console.log('POST request body:', req.body);
+      console.log('POST request body:', request.body);
     });
   }
-
-  if(req.method === 'GET' && req.url.pathname === '/cowsay') {
-    response.write(cowsay.say({text: 'the cow says hello'}));
-    response.end();
+  if(request.url.pathname === '/') {
+    response.writeHead(200, {'Content-Type': 'text/plain'});
+    response.end('what up from my server');
   }
+
+  if(request.method === 'GET' && request.url.pathname === '/cowsay' && request.url.query.text !== undefined) {
+  // if(request.method === 'GET' && request.url.pathname === '/cowsay') {
+
+    response.writeHead(200, {'Content-Type': 'text/plain'});
+    // response.write(cowsay.say({text: 'the cow says hello'}));
+    response.end(cowsay.say({text: request.url.query.text.trim()}));
+
+  }
+  if(request.method === 'GET' && request.url.pathname === '/cowsay' && request.url.query.text === undefined) {
+    response.writeHead(400, {'Content-Type': 'text/plain'});
+    response.end(cowsay.say({text: 'bad request'}));
+  }
+
   response.end();
 });
 
