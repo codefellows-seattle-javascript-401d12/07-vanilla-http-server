@@ -13,7 +13,8 @@ const server = http.createServer(function(request, response) {
 
   if (request.url.pathname === '/') {
     response.writeHead(200, 'Hello from my server!', {'Content-Type': 'text/plain'});
-    return response.end();
+    response.end();
+    return;
   }
 
   if (request.url.pathname === '/cowsay') {
@@ -22,11 +23,13 @@ const server = http.createServer(function(request, response) {
       if (request.url.query.text) {
         response.writeHead(200, contentType);
         response.write(cowsay.say({text: request.url.query.text}));
-        return response.end();
+        response.end();
+        return;
       }
       response.writeHead(400, contentType);
       response.write(cowsay.say({text: 'Bad request'}));
-      return response.end();
+      response.end();
+      return;
     }
 
     if (request.method === 'POST') {
@@ -35,11 +38,13 @@ const server = http.createServer(function(request, response) {
         if (request.body.text) {
           response.writeHead(200, contentType);
           response.write(cowsay.say({text: request.body.text}));
-          return response.end();
+          response.end();
+          return;
         }
         response.writeHead(400, contentType);
         response.write(cowsay.say({text: 'Bad request'}));
-        return response.end();
+        response.end();
+        return;
       });
     }
   }
