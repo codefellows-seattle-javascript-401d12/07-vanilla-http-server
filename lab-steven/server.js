@@ -13,7 +13,6 @@ const server = http.createServer(function(request, response) {
     response.writeHead(400, contentType);
     response.write(cowsay.say({text: 'Bad request.'}));
     response.end();
-    return;
   };
 
   request.url = url.parse(request.url);
@@ -36,6 +35,7 @@ const server = http.createServer(function(request, response) {
         return;
       }
       badRequest();
+      return;
     }
 
     if (request.method === 'POST') {
@@ -48,8 +48,10 @@ const server = http.createServer(function(request, response) {
           return;
         }
         badRequest();
+        return;
       });
       badRequest();
+      return;
     }
   }
 });
