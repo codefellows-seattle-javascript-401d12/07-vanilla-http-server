@@ -19,19 +19,19 @@
 ## Description
 * [x] Create an HTTP Server using the NodeJS `http` module
 * [x] Create a *custom* body parsing module that is used for parsing the body of all **POST** requests
-* For all requests made to `/`, the server should respond with the following:
-  * a header containing `Content-Type: text/plain`
-  * a status code of **200**
-  * a response with the string "hello from my server!"
+* [x] For all requests made to `/`, the server should respond with the following:
+  * [x] a header containing `Content-Type: text/plain`
+  * [x] a status code of **200**
+  * [x] a response with the string "hello from my server!"
 * For all **GET** requests made to `/cowsay`, the server should respond with the following:
-  * the query string should have the key value `text=<message>`
-  * the response header should include `Content-Type: text/plain`
-  * if the query `text=messsage` is set, respond with:
-    * a status code of 200
-    * a response body that includes the value returned from `cowsay.say({ text: <querystring text> })`
-  * if the query `text=message` is **not** set, respond with:
-    * status code = 400
-    * a body including the value returned from `cowsay.say({ text: 'bad request' })`
+  * [x] the query string should have the key value `text=<message>`
+  * [x] the response header should include `Content-Type: text/plain`
+  * [x] if the query `text=messsage` is set, respond with:
+    * [x] a status code of 200
+    * [x] a response body that includes the value returned from `cowsay.say({ text: <querystring text> })`
+  * [x] if the query `text=message` is **not** set, respond with:
+    * [x] status code = 400
+    * [x] a body including the value returned from `cowsay.say({ text: 'bad request' })`
 * For all **POST** requests made to `/cowsay`, the server should respond with the following:
   * the response header should include `Content-Type: text/plain`
   * if the JSON `{text: messsage}` is set in the body, respond with:
