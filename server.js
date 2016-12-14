@@ -19,7 +19,12 @@ router.add('GET', '/cowsay', function(req, res) {
   let q = req.url.query.text;
   let msg = (q && q.length > 0) ? q : 'text=Tell me what to say';
   // res.write('You are trying to GET to /cowsay...\n');
-  msg = cowsay.say({ text: msg});
+  msg = cowsay.say({
+    text: msg,
+    f: 'dragon',
+    e: '--',
+    T: 'Y'
+  });
   res.write(msg + '\n');
   res.end();
 });
