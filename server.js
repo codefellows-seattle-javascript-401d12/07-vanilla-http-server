@@ -9,11 +9,11 @@ const PORT = 3000;
 
 
 const server = http.createServer(function(req,res){
- console.log('http server created');
- req.url = url.parse(req.url);
- req.url.query = querystring.parse(req.url.query);
+  console.log('http server created');
+  req.url = url.parse(req.url);
+  req.url.query = querystring.parse(req.url.query);
 });
 
 server.listen(PORT, () => {
- console.log('Hello http server');
+  console.log('Hello http server');
 });
