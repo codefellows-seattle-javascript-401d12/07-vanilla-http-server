@@ -13,6 +13,6 @@ module.exports = function(req, callback) {
     }
     catch (err) {
       callback(err);
-    };
+    }
   });
 };
