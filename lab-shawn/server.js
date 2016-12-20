@@ -20,19 +20,22 @@ const server = http.createServer(function(req,res){
   if(req.method === 'GET' && req.url.pathname === '/cowsay'){
     if(!req.url.query.text){
       res.writeHead(400, {'Content-Type': 'text/plain'});
-      res.write(cowsay.say({text: 'bad request'}));
+      res.write(cowsay.say({f:'dragon',text: 'bad request'}));
       res.end();
     }else{
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.write(cowsay.say({ text: req.url.query.text}));
+    res.write(cowsay.say({f:'dragon', text: req.url.query.text}));
     res.end();
     }
   }
-  if(req.method === 'POST' ){
+  if(req.method === 'POST' && req.url.pathname === '/cowsay' ){
     parseBody(req, function(err){
       if(err) console.error(err);
-      console.log('request body', req.body);
-
+      res.writeHead(200, {
+        'Content-Type':'text/plain'
+      });
+      res.write(cowsay.say({f: 'dragon', text: req.body.text}));
+      res.end();
     });
   }
 
