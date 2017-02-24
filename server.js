@@ -4,6 +4,7 @@ const http = require('http');
 const url = require('url');
 const querystring = require('querystring');
 const cowsay = require('cowsay');
+const parseBody = require('./lib/parse-body.js');
 const PORT = process.env.PORT || 8000;
 
 const server = http.createServer(function(req, res) {
@@ -16,6 +17,12 @@ const server = http.createServer(function(req, res) {
     console.log('get request to cowsay');
     res.write(cowsay.say({text: 'hello from cowville'}));
     res.end();
+  }
+
+  if (req.method === 'POST') {
+    parseBody(req, function(err) {
+      console.log(`POST request body: ${req.body}`);
+    });
   }
 });
 
