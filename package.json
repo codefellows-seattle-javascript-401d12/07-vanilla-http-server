@@ -1,0 +1,23 @@
+{
+  "name": "07-vanilla-http-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maschigokae/07-vanilla-http-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maschigokae/07-vanilla-http-server/issues"
+  },
+  "homepage": "https://github.com/maschigokae/07-vanilla-http-server#readme",
+  "dependencies": {
+    "cowsay": "^1.1.9"
+  }
+}
