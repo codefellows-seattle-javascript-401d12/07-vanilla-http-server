@@ -11,6 +11,12 @@ const server = http.createServer(function(req, res) {
   req.url = url.parse(req.url);
   req.url.query = querystring.parse(req.url.query);
 
+  console.log('req url:', req.url);
+  console.log('req method:', req.method);
+  console.log('req headers:', req.headers);
+  console.log('req url query:', req.url.query);
+  console.log('request:', req);
+
   if(req.method === 'POST' && req.url.pathname === '/cowsay') {
     parseBody (req, function(err) {
       console.log('POST request body:', req.body);
